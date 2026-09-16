@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f7f5f0">
+    <meta name="description" content="把值得期待的日子，放在眼前。">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="盼日子">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
+    <link rel="apple-touch-icon" href="./icon-180.png">
+    <link rel="stylesheet" href="./styles.css">
+    <title>盼日子 · 倒计日</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span>盼日子</span></div>
+        <button class="icon-button" id="settingsButton" aria-label="打开设置" title="设置">⚙</button>
+      </header>
+
+      <main>
+        <section class="intro">
+          <p class="eyebrow" id="todayLabel"></p>
+          <h1>总有些日子，<br><em>值得期待。</em></h1>
+          <p class="subtitle">为你想念的那一天，留个位置。</p>
+        </section>
+
+        <section class="hero" id="hero" aria-label="最近的倒计日"></section>
+
+        <section class="list-section" aria-labelledby="listTitle">
+          <div class="section-heading">
+            <div><p class="eyebrow section-kicker">YOUR MOMENTS</p><h2 id="listTitle">我的日子 <span id="countLabel">0</span></h2></div>
+            <button class="text-button" id="addInline">＋ 新增</button>
+          </div>
+          <div class="filters" role="group" aria-label="筛选倒计日">
+            <button class="filter active" data-filter="all" aria-pressed="true">全部</button>
+            <button class="filter" data-filter="upcoming" aria-pressed="false">即将到来</button>
+            <button class="filter" data-filter="recurring" aria-pressed="false">每年 / 每月</button>
+            <button class="filter" data-filter="past" aria-pressed="false">已经发生</button>
+          </div>
+          <div id="eventList" class="event-list" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <button class="floating-add" id="addButton" aria-label="新增倒计日"><span aria-hidden="true">＋</span><span>加一个日子</span></button>
+      <footer>愿每一个平凡的今天，都有一点盼头 ✳</footer>
+    </div>
+
+    <dialog id="eventDialog" class="sheet" aria-labelledby="formTitle">
+      <form id="eventForm" class="sheet-content">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-heading"><h2 id="formTitle">加一个日子</h2><button type="button" class="close-button" data-close="eventDialog" aria-label="关闭">×</button></div>
+        <input type="hidden" id="eventId">
+        <label for="eventTitle">给它起个名字</label>
+        <input id="eventTitle" name="title" type="text" maxlength="60" placeholder="比如：终于放假啦" required autocomplete="off">
+        <label for="eventDate">是哪一天？</label>
+        <input id="eventDate" name="date" type="date" required>
+        <div class="two-cols">
+          <div><label for="eventCategory">分类</label><select id="eventCategory" name="category"><option value="生活">生活</option><option value="工作">工作</option><option value="纪念日">纪念日</option><option value="旅行">旅行</option><option value="其他">其他</option></select></div>
+          <div><label for="eventRepeat">重复</label><select id="eventRepeat" name="repeat"><option value="none">不重复</option><option value="yearly">每年</option><option value="monthly">每月</option></select></div>
+        </div>
+        <fieldset class="color-picker"><legend>挑一个颜色</legend><label><input type="radio" name="color" value="peach" checked><span class="swatch peach" aria-label="蜜桃色"></span></label><label><input type="radio" name="color" value="lavender"><span class="swatch lavender" aria-label="薰衣草色"></span></label><label><input type="radio" name="color" value="sage"><span class="swatch sage" aria-label="鼠尾草色"></span></label><label><input type="radio" name="color" value="butter"><span class="swatch butter" aria-label="奶油黄色"></span></label><label><input type="radio" name="color" value="sky"><span class="swatch sky" aria-label="浅蓝色"></span></label></fieldset>
+        <label class="pin-row"><input id="eventPinned" type="checkbox"><span>在首页置顶这个日子</span></label>
+        <button class="primary-button" type="submit">保存这个日子 <span aria-hidden="true">↗</span></button>
+        <button class="delete-button hidden" id="deleteButton" type="button">删除这个日子</button>
+      </form>
+    </dialog>
+
+    <dialog id="settingsDialog" class="sheet" aria-labelledby="settingsTitle">
+      <div class="sheet-content">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-heading"><h2 id="settingsTitle">设置与备份</h2><button class="close-button" data-close="settingsDialog" aria-label="关闭">×</button></div>
+        <p class="settings-explain">日子保存在这台设备的浏览器里。换手机或清理浏览器数据前，先导出一份备份。</p>
+        <button id="exportButton" class="setting-action">↓ 导出备份 <span>JSON 文件</span></button>
+        <button id="importButton" class="setting-action">↑ 导入备份 <span>合并已有日子</span></button>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <p class="settings-note">每月 29、30、31 日遇到较短的月份，会显示在当月最后一天；每年 2 月 29 日遇到平年，会显示在 2 月 28 日。</p>
+      </div>
+    </dialog>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
