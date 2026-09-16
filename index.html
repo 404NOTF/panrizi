@@ -30,6 +30,16 @@
 
         <section class="hero" id="hero" aria-label="最近的倒计日"></section>
 
+        <section class="holiday-section" aria-labelledby="holidayTitle">
+          <div class="section-heading">
+            <div><p class="eyebrow section-kicker">LITTLE HOLIDAYS</p><h2 id="holidayTitle">节假日也要盼 <span>✿</span></h2></div>
+            <button class="text-button" id="chooseHolidays">挑选节日 ↗</button>
+          </div>
+          <p class="holiday-description">常见节日一键加入；寒暑假和学校放假日也能自己记录。</p>
+          <div class="holiday-preview" id="holidayPreview"></div>
+          <button class="holiday-custom" id="addHolidayCustom">＋ 记录我的假期</button>
+        </section>
+
         <section class="list-section" aria-labelledby="listTitle">
           <div class="section-heading">
             <div><p class="eyebrow section-kicker">YOUR MOMENTS</p><h2 id="listTitle">我的日子 <span id="countLabel">0</span></h2></div>
@@ -37,6 +47,7 @@
           </div>
           <div class="filters" role="group" aria-label="筛选倒计日">
             <button class="filter active" data-filter="all" aria-pressed="true">全部</button>
+            <button class="filter" data-filter="holiday" aria-pressed="false">节假日</button>
             <button class="filter" data-filter="upcoming" aria-pressed="false">即将到来</button>
             <button class="filter" data-filter="recurring" aria-pressed="false">每年 / 每月</button>
             <button class="filter" data-filter="past" aria-pressed="false">已经发生</button>
@@ -59,14 +70,26 @@
         <label for="eventDate">是哪一天？</label>
         <input id="eventDate" name="date" type="date" required>
         <div class="two-cols">
-          <div><label for="eventCategory">分类</label><select id="eventCategory" name="category"><option value="生活">生活</option><option value="工作">工作</option><option value="纪念日">纪念日</option><option value="旅行">旅行</option><option value="其他">其他</option></select></div>
+          <div><label for="eventCategory">分类</label><select id="eventCategory" name="category"><option value="生活">生活</option><option value="节假日">节假日</option><option value="工作">工作</option><option value="纪念日">纪念日</option><option value="旅行">旅行</option><option value="其他">其他</option></select></div>
           <div><label for="eventRepeat">重复</label><select id="eventRepeat" name="repeat"><option value="none">不重复</option><option value="yearly">每年</option><option value="monthly">每月</option></select></div>
         </div>
+        <p class="preset-note hidden" id="presetNote">这是按节日日期自动更新的日子。具体放假安排可以另加一个倒计日。</p>
         <fieldset class="color-picker"><legend>挑一个颜色</legend><label><input type="radio" name="color" value="peach" checked><span class="swatch peach" aria-label="蜜桃色"></span></label><label><input type="radio" name="color" value="lavender"><span class="swatch lavender" aria-label="薰衣草色"></span></label><label><input type="radio" name="color" value="sage"><span class="swatch sage" aria-label="鼠尾草色"></span></label><label><input type="radio" name="color" value="butter"><span class="swatch butter" aria-label="奶油黄色"></span></label><label><input type="radio" name="color" value="sky"><span class="swatch sky" aria-label="浅蓝色"></span></label></fieldset>
         <label class="pin-row"><input id="eventPinned" type="checkbox"><span>在首页置顶这个日子</span></label>
         <button class="primary-button" type="submit">保存这个日子 <span aria-hidden="true">↗</span></button>
         <button class="delete-button hidden" id="deleteButton" type="button">删除这个日子</button>
       </form>
+    </dialog>
+
+    <dialog id="holidayDialog" class="sheet" aria-labelledby="holidayDialogTitle">
+      <div class="sheet-content">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-heading"><h2 id="holidayDialogTitle">挑几个节日盼着</h2><button class="close-button" data-close="holidayDialog" aria-label="关闭">×</button></div>
+        <p class="settings-explain">点一下就加入你的倒计日，往后每年自动更新节日日期。</p>
+        <div class="holiday-picker" id="holidayPicker"></div>
+        <button class="primary-button" id="addAllHolidays" type="button">把这些节日都加入 <span aria-hidden="true">↗</span></button>
+        <p class="settings-note">这里记录的是节日当天，不包含各年的调休、补班或学校假期。那些日期可以用“记录我的假期”自行添加。</p>
+      </div>
     </dialog>
 
     <dialog id="settingsDialog" class="sheet" aria-labelledby="settingsTitle">
